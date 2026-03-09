@@ -4,18 +4,47 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fabrikate"
-version = "0.2.1"
-description = "Generate contextually coherent mock data — people, companies, and transactions that actually make sense together."
+version = "0.3.0"
+description = "Generate contextually coherent mock data — people, companies, products, and transactions that actually make sense together. 11 locales, 25+ fields per person, realistic distributions, zero dependencies."
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
 authors = [
     {name = "Sai Aditya Datta Tipirneni", email = "saiadityatipirneni@gmail.com"}
 ]
-keywords = ["mock", "fake", "data", "testing", "fixtures", "coherent", "fabrikate"]
+maintainers = [
+    {name = "Sai Aditya Datta Tipirneni", email = "saiadityatipirneni@gmail.com"}
+]
+keywords = [
+    "fabrikate",
+    "mock-data",
+    "fake-data",
+    "test-data",
+    "test-fixtures",
+    "data-generation",
+    "synthetic-data",
+    "faker-alternative",
+    "coherent-data",
+    "locale-aware",
+    "i18n",
+    "internationalization",
+    "seed-database",
+    "mock",
+    "faker",
+    "testing",
+    "fixtures",
+    "dummy-data",
+    "sample-data",
+    "demo-data",
+]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Testing :: Mocking",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Database",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -23,20 +52,48 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "Topic :: Software Development :: Testing",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Operating System :: OS Independent",
+    "Natural Language :: English",
+    "Natural Language :: Japanese",
+    "Natural Language :: German",
+    "Natural Language :: French",
+    "Natural Language :: Spanish",
+    "Natural Language :: Portuguese",
+    "Natural Language :: Korean",
+    "Natural Language :: Arabic",
+    "Natural Language :: Hindi",
+    "Typing :: Typed",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "black", "ruff", "mypy"]
+dev = ["pytest>=7.0", "black", "ruff", "mypy"]
 
 [project.urls]
 Homepage = "https://github.com/aditya36900/fabrikate"
+Repository = "https://github.com/aditya36900/fabrikate"
 Issues = "https://github.com/aditya36900/fabrikate/issues"
+Documentation = "https://github.com/aditya36900/fabrikate#readme"
+Changelog = "https://github.com/aditya36900/fabrikate/releases"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.pyright]
-include = ["src", "tests"]
-extraPaths = ["src"]
+[tool.black]
+line-length = 100
+target-version = ["py39"]
 
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

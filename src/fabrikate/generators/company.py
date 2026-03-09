@@ -15,6 +15,8 @@ from typing import Optional
 from fabrikate.context import Context
 from fabrikate.locales import get_locale
 from fabrikate.generators.person import Person
+from fabrikate.distributions import log_normal_float
+from fabrikate.reference_data import TAX_ID_FORMATS, DEPARTMENTS
 
 
 INDUSTRY_KEYWORDS = {
@@ -47,6 +49,10 @@ class Company:
     bank: str = ""
     city: str = ""
     country: str = ""
+    tax_id: str = ""
+    annual_revenue: float = 0.0
+    website: str = ""
+    departments: list[str] = field(default_factory=list)
     employees: list[Person] = field(default_factory=list)
     _ctx: Optional[Context] = field(default=None, repr=False)
 
@@ -94,6 +100,24 @@ class Company:
             "employee_count", rng.choice([5, 12, 25, 50, 100, 250, 500, 1000])
         )
 
+        # Tax ID — locale format
+        cc = ctx.country_code
+        tax_info = TAX_ID_FORMATS.get(cc, {"name": "Tax ID", "format": "##########"})
+        from fabrikate.generators.person import _format_id
+        company.tax_id = overrides.get("tax_id", _format_id(tax_info["format"], rng))
+
+        # Annual revenue (log-normal, scales with employee count)
+        base_revenue = company.employee_count * rng.randint(80000, 300000)
+        company.annual_revenue = overrides.get("annual_revenue", round(log_normal_float(rng, base_revenue, sigma=0.4), -3))
+
+        # Website
+        name_slug = company.name.split()[0].lower().replace(".", "").replace(",", "")
+        company.website = overrides.get("website", f"https://www.{name_slug}.com")
+
+        # Departments (scale with company size)
+        num_depts = min(len(DEPARTMENTS), max(2, company.employee_count // 20))
+        company.departments = overrides.get("departments", rng.sample(DEPARTMENTS, num_depts))
+
         ctx.register(company)
         return company
 
@@ -103,13 +127,6 @@ class Company:
 
         Employees inherit the company's context (locale, industry, etc.)
         and are linked to this company by ID.
-
-        Parameters
-        ----------
-        count : int
-            Number of employees to generate.
-        **person_overrides
-            Passed through to Person.generate().
         """
         new_employees = []
         for _ in range(count):
@@ -134,5 +151,9 @@ class Company:
             "bank": self.bank,
             "city": self.city,
             "country": self.country,
+            "tax_id": self.tax_id,
+            "annual_revenue": self.annual_revenue,
+            "website": self.website,
+            "departments": self.departments,
             "employees": [e.to_dict() for e in self.employees],
         }
