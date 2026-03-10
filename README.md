@@ -4,7 +4,7 @@
 
 Generate fake people, companies, products, and transactions where everything makes sense together. A person in Tokyo gets a Japanese name, Japanese phone number, Japanese bank, Aadhaar-style ID, a Toyota, and pays via PayPay. A German company has a GmbH suffix, a VAT number, and pays salaries in EUR.
 
-Zero dependencies. Pure Python. 11 locales. 300+ names per locale. 25+ fields per person.
+Zero dependencies. Pure Python. 11 locales. Up to 2 million unique names per locale (1,000 first names × 1,000 last names, per gender). 25+ fields per person.
 
 ```bash
 pip install fabrikate
@@ -78,7 +78,7 @@ print(world.to_json())
 | `ar_SA` | Saudi Arabia | SAR (﷼) | +966 | National ID | Mada Card |
 | `en_NG` | Nigeria | NGN (₦) | +234 | NIN | Bank Transfer |
 
-Each locale has ~100 male names, ~100 female names, ~100 last names, 25-35 cities, locale-specific banks, email domains, company suffixes, street formats, and more.
+Each locale has 1,000 male first names, 1,000 female first names, and 1,000 last names — yielding up to 2 million unique full name combinations (1,000 × 1,000 per gender). Plus 50 cities, locale-specific banks, email domains, company suffixes, street formats, and more.
 
 ## Core Concepts
 
@@ -398,7 +398,7 @@ company.hire(50)
 **Load testing:** Generate large volumes of realistic data:
 ```python
 world = World(locale="en_US", seed=1)
-people = world.people(10000)     # 10K people, 99%+ unique names
+people = world.people(10000)     # 10K people — tiny fraction of 2M unique name combinations
 txns = world.transactions(100000) # 100K transactions
 ```
 
