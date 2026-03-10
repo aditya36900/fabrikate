@@ -2,7 +2,7 @@
 
 **Contextually coherent mock data generation for Python.**
 
-Generate fake people, companies, products, and transactions where everything makes sense together. A person in Tokyo gets a Japanese name, Japanese phone number, Japanese bank, Aadhaar-style ID, a Toyota, and pays via PayPay. A German company has a GmbH suffix, a VAT number, and pays salaries in EUR.
+Generate fake people, companies, products, and transactions where everything makes sense together. A person in Tokyo gets a Japanese name, Japanese phone number, Japanese bank, My Number, a Toyota, and pays via PayPay. A German company has a GmbH suffix, a VAT number, and pays salaries in EUR.
 
 Zero dependencies. Pure Python. 11 locales. Up to 2 million unique names per locale (1,000 first names × 1,000 last names, per gender). 25+ fields per person.
 
